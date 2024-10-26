@@ -1,0 +1,58 @@
+<div style="padding: 20px; font-family: system-ui;">
+  <div style="background: linear-gradient(135deg, #89F7FE 0%, #66A6FF 100%); border-radius: 10px; padding: 20px; text-align: center; color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <script>
+      function updateTime() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        
+        let remainingHours = 0;
+        let status = "";
+        
+        if (hour < 9) {
+          status = "営業時間外";
+        } else if (hour >= 18) {
+          status = "営業時間外";
+        } else if (hour >= 12 && hour < 13) {
+          status = "休憩時間";
+        } else if (hour < 12) {
+          remainingHours = (12 - hour) + 5;
+        } else {
+          remainingHours = 18 - hour;
+        }
+        
+        const display = document.getElementById('timeDisplay');
+        const statusDisplay = document.getElementById('statusDisplay');
+        
+        if (status) {
+          display.style.display = 'none';
+          statusDisplay.textContent = status;
+          statusDisplay.style.display = 'block';
+        } else {
+          display.style.display = 'flex';
+          statusDisplay.style.display = 'none';
+          const hourDisplay = document.getElementById('hours');
+          const minuteDisplay = document.getElementById('minutes');
+          hourDisplay.textContent = remainingHours;
+          minuteDisplay.textContent = 60 - minute;
+        }
+      }
+      
+      setInterval(updateTime, 1000);
+      updateTime();
+    </script>
+    
+    <div id="timeDisplay" style="display: flex; justify-content: center; gap: 10px;">
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div id="hours" style="font-size: 72px; font-weight: bold; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">0</div>
+        <div style="font-size: 14px; opacity: 0.9;">時間</div>
+      </div>
+      <div style="display: flex; flex-direction: column; align-items: center;">
+        <div id="minutes" style="font-size: 72px; font-weight: bold; line-height: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">0</div>
+        <div style="font-size: 14px; opacity: 0.9;">分</div>
+      </div>
+    </div>
+    
+    <div id="statusDisplay" style="display: none; font-size: 36px; font-weight: bold; text-shadow: 0 2px 4px rgba(0,0,0,0.1);"></div>
+  </div>
+</div>
